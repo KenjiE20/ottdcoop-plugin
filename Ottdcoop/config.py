@@ -46,5 +46,6 @@ Ottdcoop = conf.registerPlugin('Ottdcoop')
 #     registry.Boolean(False, """Help for someConfigVariableName."""))
 conf.registerGlobalValue(Ottdcoop, 'PlayerReply',
      registry.String('Player, please change your in game nick', """What the bot will say if it see '*** Player joined the game'"""))
+conf.registerGroup(Ottdcoop, 'abbr')
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
