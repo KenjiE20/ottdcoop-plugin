@@ -65,7 +65,7 @@ class Ottdcoop(callbacks.PluginRegexp):
             name = name.lower() # Just in case.
             text = value()
             url = value.url()
-            self.lof.debug ('Name: %s, Text: %s, URL: %s', name, text, url)
+            self.log.debug ('Name: %s, Text: %s, URL: %s', name, text, url)
             self.abbr[name] = [text, url, None]
         for (name, (text, url, _)) in self.abbr.items():
             try:
