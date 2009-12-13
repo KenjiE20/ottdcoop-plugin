@@ -51,19 +51,21 @@ class Ottdcoop(callbacks.PluginRegexp):
         self.abbr = {}
         # XXX This should go.  aliases should be a space separate list, etc.
         group = conf.supybot.plugins.Ottdcoop.abbr
-#        for (name, text) in registry._cache.iteritems():
-#            name = name.lower()
-#             if name.startswith('supybot.plugins.ottdcoop.abbr.'):
-#                 name = name[len('supybot.plugins.ottdcoop.abbr.'):]
-#                 if '.' in name:
-#                     continue
-#                 conf.registerGlobalValue(group, name, registry.String('', ''))
-#                 conf.registerGlobalValue(group.get(name), 'url',
-#                                          registry.Boolean(False, ''))
+        for (name, text) in registry._cache.iteritems():
+            name = name.lower()
+            if name.startswith('supybot.plugins.ottdcoop.abbr.'):
+                name = name[len('supybot.plugins.ottdcoop.abbr.'):]
+                if '.' in name:
+                    continue
+                self.log.debug ('Name: %s, Value: %s', name, text)
+                conf.registerGlobalValue(group, name, registry.String('', ''))
+                conf.registerGlobalValue(group.get(name), 'url',
+                                         registry.String('', ''))
         for (name, value) in group.getValues(fullNames=False):
             name = name.lower() # Just in case.
             text = value()
             url = value.url()
+            self.lof.debug ('Name: %s, Text: %s, URL: %s', name, text, url)
             self.abbr[name] = [text, url, None]
         for (name, (text, url, _)) in self.abbr.items():
             try:
