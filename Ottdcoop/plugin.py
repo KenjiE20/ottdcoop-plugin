@@ -103,6 +103,10 @@ class Ottdcoop(callbacks.PluginRegexp):
 #         except utils.error.Error, e:
 #             irc.reply(str(e))
 
+    # 
+    # Function for making an abbreviation a command
+    # Makes a function and returns it
+    #
     def makeAbbrCommand(self, name):
         docstring = """<no arguments>
 
@@ -257,6 +261,59 @@ class Ottdcoop(callbacks.PluginRegexp):
         else:
             irc.reply('There are no words defined.')
 
+    #
+    # tunnels / line split calcs
+    # g = n(tl) + 2n - tl + 2
+    #
+    def maxGapCalc(self, number, length):
+        #Sanitise
+        number = int(number)
+        length = int(length)
+        gap = (number*length) + (2*number) - length + 2
+        return gap
+
+    #
+    # Command to build tunnel/linesplit output
+    #
+    def gap(self, irc, msg, args, length, target):
+        """<trainlength> [<split>]
+
+        Returns minimum and maximum signal gap sizes for 2,3 and 4 linesplits
+        with <trainlength>.
+        If <spilt> is given it will return the the gap sizes for <split> (+/-) 1.
+        """
+        if target > 3:
+            mingaptm = self.maxGapCalc(target - 2, length) + 1
+            maxgaptm = self.maxGapCalc(target - 1, length)
+            mingapt = maxgaptm + 1
+            maxgapt = self.maxGapCalc(target, length)
+            mingaptp = maxgapt + 1
+            maxgaptp = self.maxGapCalc(target + 1, length)
+            str = format('For Trainlength of %s: %s needs %s, %s needs %s, %s needs %s.',
+                    length,
+                    ircutils.bold(format('%s - %s', mingaptm, maxgaptm)), target - 1,
+                    ircutils.bold(format('%s - %s', mingapt, maxgapt)), target,
+                    ircutils.bold(format('%s - %s', mingaptp, maxgaptp)), target + 1)
+            irc.reply(str)
+        else:
+            maxgap2 = self.maxGapCalc(2, length)
+            mingap3 = maxgap2 + 1
+            maxgap3 = self.maxGapCalc(3, length)
+            mingap4 = maxgap3 + 1
+            maxgap4 = self.maxGapCalc(4, length)
+            str = format('For Trainlength of %s: %s needs 2, %s needs 3, %s needs 4.',
+                    length,
+                    ircutils.bold(format('< %s', maxgap2)),
+                    ircutils.bold(format('%s - %s', mingap3, maxgap3)),
+                    ircutils.bold(format('%s - %s', mingap4, maxgap4)))
+            irc.reply(str)
+    gap = wrap(gap, ['int', optional('int')])
+    tunnels = tunnel = gaps = split = splits = gap
+
+    #
+    # Regexp based auto-replys
+    #
+    
     def warnSnarfer(self, irc, msg, match):
         r"^\*\*\* Player(| #\d+) joined the game$"
         channel = msg.args[0]
@@ -266,6 +323,10 @@ class Ottdcoop(callbacks.PluginRegexp):
             return
         s = self.registryValue('PlayerReply')
         irc.reply(s, prefixNick=False)
+
+    #
+    # clcalc functions
+    #
 
     def clcalc(self, irc, msg, args, rail, tilt, number):
         """<railtype> [<tilt>] <cl|km/h>
