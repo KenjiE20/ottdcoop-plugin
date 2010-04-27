@@ -280,7 +280,7 @@ class Ottdcoop(callbacks.PluginRegexp):
 
         Returns minimum and maximum signal gap sizes for 2,3 and 4 linesplits
         with <trainlength>.
-        If <spilt> is given it will return the the gap sizes for <split> (+/-) 1.
+        If <spilt> is given it will return the gap sizes for <split> (+/-) 1.
         """
         if target > 3:
             mingaptm = self.maxGapCalc(target - 2, length) + 1
