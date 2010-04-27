@@ -303,7 +303,7 @@ class Ottdcoop(callbacks.PluginRegexp):
             maxgap4 = self.maxGapCalc(4, length)
             str = format('For Trainlength of %s: %s needs 2, %s needs 3, %s needs 4.',
                     length,
-                    ircutils.bold(format('< %s', maxgap2)),
+                    ircutils.bold(format('<= %s', maxgap2)),
                     ircutils.bold(format('%s - %s', mingap3, maxgap3)),
                     ircutils.bold(format('%s - %s', mingap4, maxgap4)))
             irc.reply(str)
