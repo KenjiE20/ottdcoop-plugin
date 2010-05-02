@@ -44,6 +44,8 @@ Ottdcoop = conf.registerPlugin('Ottdcoop')
 # This is where your configuration variables (if any) should go.  For example:
 # conf.registerGlobalValue(Ottdcoop, 'someConfigVariableName',
 #     registry.Boolean(False, """Help for someConfigVariableName."""))
+conf.registerChannelValue(Ottdcoop, 'PlayerWarner',
+     registry.Boolean(False, """Determines whether the bot will auto warn clients joining as 'Player'"""))
 conf.registerGlobalValue(Ottdcoop, 'PlayerReply',
      registry.String('Player, please change your in game nick', """What the bot will say if it see '*** Player joined the game'"""))
 conf.registerGroup(Ottdcoop, 'abbr')

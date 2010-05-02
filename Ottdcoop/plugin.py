@@ -321,6 +321,8 @@ class Ottdcoop(callbacks.PluginRegexp):
             return
         if callbacks.addressed(irc.nick, msg):
             return
+        if not self.registryValue('PlayerWarner', channel):
+            return
         s = self.registryValue('PlayerReply')
         irc.reply(s, prefixNick=False)
 
