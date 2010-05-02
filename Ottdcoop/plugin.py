@@ -315,16 +315,26 @@ class Ottdcoop(callbacks.PluginRegexp):
     #
     
     def warnSnarfer(self, irc, msg, match):
-        r"^\*\*\* Player(| #\d+) joined the game$"
+        r"^\*\*\* (.*) #\d+ joined the game$|^\*\*\* Player(| #\d+) joined the game$"
         channel = msg.args[0]
         if not irc.isChannel(channel):
             return
         if callbacks.addressed(irc.nick, msg):
             return
-        if not self.registryValue('PlayerWarner', channel):
-            return
-        s = self.registryValue('PlayerReply', channel)
-        irc.reply(s, prefixNick=False)
+        player = re.compile('^\*\*\* Player(| #\d+) joined the game$')
+        multi = re.compile('^\*\*\* (.*) #\d+ joined the game$')
+        if player.match(match.group(0)):
+            if not self.registryValue('PlayerWarner', channel):
+                return
+            s = self.registryValue('PlayerReply', channel)
+            irc.reply(s, prefixNick=False)
+        elif multi.match(match.group(0)):
+            if not self.registryValue('MultiWarner', channel):
+                return
+            s = self.registryValue('MultiReply', channel)
+            nick = re.compile('\$name')
+            name = match.group(1)
+            irc.reply(nick.sub(name, s), prefixNick=False)
 
     #
     # clcalc functions

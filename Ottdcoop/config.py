@@ -48,6 +48,10 @@ conf.registerChannelValue(Ottdcoop, 'PlayerWarner',
      registry.Boolean(False, """Determines whether the bot will auto warn clients joining as 'Player'"""))
 conf.registerChannelValue(Ottdcoop, 'PlayerReply',
      registry.String('Player, please change your in game nick', """What the bot will say if it sees '*** Player joined the game'"""))
+conf.registerChannelValue(Ottdcoop, 'MultiWarner',
+     registry.Boolean(False, """Determines whether the bot will auto warn clients multiple joining as 'nick #number'"""))
+conf.registerChannelValue(Ottdcoop, 'MultiReply',
+     registry.String('$name, it appears that you have joined twice, please ask someone to join you, rather than double joining. If this is due to a time-out, you may disregard this.', """What the bot will say if it sees '*** nick #number joined the game'"""))
 conf.registerGroup(Ottdcoop, 'abbr')
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
