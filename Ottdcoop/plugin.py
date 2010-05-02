@@ -323,7 +323,7 @@ class Ottdcoop(callbacks.PluginRegexp):
             return
         if not self.registryValue('PlayerWarner', channel):
             return
-        s = self.registryValue('PlayerReply')
+        s = self.registryValue('PlayerReply', channel)
         irc.reply(s, prefixNick=False)
 
     #

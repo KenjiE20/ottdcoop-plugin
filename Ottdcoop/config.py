@@ -46,7 +46,7 @@ Ottdcoop = conf.registerPlugin('Ottdcoop')
 #     registry.Boolean(False, """Help for someConfigVariableName."""))
 conf.registerChannelValue(Ottdcoop, 'PlayerWarner',
      registry.Boolean(False, """Determines whether the bot will auto warn clients joining as 'Player'"""))
-conf.registerGlobalValue(Ottdcoop, 'PlayerReply',
+conf.registerChannelValue(Ottdcoop, 'PlayerReply',
      registry.String('Player, please change your in game nick', """What the bot will say if it see '*** Player joined the game'"""))
 conf.registerGroup(Ottdcoop, 'abbr')
 
